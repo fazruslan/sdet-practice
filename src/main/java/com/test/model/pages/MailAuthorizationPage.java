@@ -31,11 +31,11 @@ public class MailAuthorizationPage {
     //    authorizationSignInButton().click();
     //}
 
-    @FindBy(xpath = "//input[@id='passp-field-login']") WebElement loginType;
+    @FindBy(id = "passp-field-login") WebElement loginType;
 
-    @FindBy(xpath = "//input[@id='passp-field-passwd']") WebElement passType;
+    @FindBy(xpath = "passp-field-passwd") WebElement passType;
 
-    @FindBy(xpath = "//button[@type='submit']") WebElement authorizationButton;
+    @FindBy(xpath = "//button[@type='submit'") WebElement authorizationButton;
 
 
     public void typeLogin() {
