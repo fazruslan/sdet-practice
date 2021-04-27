@@ -3,6 +3,7 @@ package com.test.model.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class YandexStartPage {
 
@@ -10,18 +11,16 @@ public class YandexStartPage {
         this.driver = driver;
     }
 
-    private WebDriver driver;
-    private By signInButtonSelector = By.xpath("//div[text()='Войти']");
-    private By mailTitleButtonSelector = By.xpath("//div[@class='desk-notif-card__mail-title']");
+    private final WebDriver driver;
+    private final By signInButtonSelector = By.xpath("//div[text()='Войти']");
+    private final By userInfoSelector = By.xpath("//span[@class='username desk-notif-card__user-name']");
 
     public String pageUrl = "https://yandex.ru";
 
     public WebElement signInButton() { return driver.findElement(signInButtonSelector); }
+    public WebElement userInfo() { return driver.findElement(userInfoSelector); }
+    public void clickSignInButton () { signInButton().click(); }
 
-    public WebElement mailTitleButton() { return driver.findElement(mailTitleButtonSelector); }
 
-
-    public void clickSignIn (WebElement signInButton) { signInButton.click(); }
-    public void clickMailButton (WebElement mailTitleButton) { mailTitleButton.click(); }
 
 }
