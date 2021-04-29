@@ -1,47 +1,113 @@
 package com.test.model.pages;
 
-
+import com.test.config.PropertiesFile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 
 import java.util.List;
 
-public class MailPage {
+public class MailPage extends PageFactory {
 
     private WebDriver driver;
     public MailPage(WebDriver driver) {
         this.driver = driver;
     }
 
+    PropertiesFile propertiesFile = new PropertiesFile();
+
     public String pageUrl = "https://mail.yandex.ru";
     public String letterTheme = "Simbirsoft theme";
-    public String userEmail = "ruslanfazylyanov@yandex.ru";
+    public String userEmail = propertiesFile.userEmail;
 
 
-    private By mailPageSignInButtonSelector = By.xpath("//a[@class='control button2 button2_view_classic button2_size_mail-big button2_theme_mail-white button2_type_link HeadBanner-Button HeadBanner-Button-Enter with-shadow']");
-    private By mailWriteButtonSelector = By.xpath("//a[@class='mail-ComposeButton js-main-action-compose']");
-    private By letterRecepientFieldSelector = By.xpath("//div[@class='composeYabbles']");
-    private By letterThemeFieldSelector = By.xpath("//input[@class='composeTextField ComposeSubject-TextField']");
-    private By letterTextAreaSelector = By.xpath("//div[@class='cke_wysiwyg_div cke_reset cke_enable_context_menu cke_editable cke_editable_themed cke_contents_ltr cke_htmlplaceholder']");
-    private By sendLetterButtonSelector = By.xpath("//button[@class='control button2 button2_view_default button2_tone_default button2_size_l button2_theme_action button2_pin_circle-circle ComposeControlPanelButton-Button ComposeControlPanelButton-Button_action']");
-    private By backToIncomingSelector = By.xpath("//a[text()='Вернуться во \"Входящие\"']");
+    @FindBy(xpath = "//div[@class='HeadBanner-ButtonsWrapper']/a[2]")
+    private WebElement mailPageSignInButton;
 
-    public WebElement mailPageSignInButton () { return driver.findElement(mailPageSignInButtonSelector); }
-    public WebElement mailWriteButton() { return driver.findElement(mailWriteButtonSelector); }
-    public WebElement letterRecepientField() { return driver.findElement(letterRecepientFieldSelector); }
-    public WebElement letterThemeField() { return driver.findElement(letterThemeFieldSelector); }
-    public WebElement letterTextArea() { return driver.findElement(letterTextAreaSelector); }
-    public WebElement sendLetterButton() { return driver.findElement(sendLetterButtonSelector); }
-    public WebElement backToIncoming() { return driver.findElement(backToIncomingSelector); }
+    @FindBy(xpath = "//div[@class='passp-button passp-sign-in-button']/button")
+    private WebElement mailAuthorizationSignInButton;
 
-    public void clickMailPageSignInButton() { mailPageSignInButton().click(); }
-    public void clickMailWriteButton() { mailWriteButton().click(); }
-    public void typeLetterRecepient() { letterRecepientField().sendKeys(userEmail); }
-    public void typeLetterTheme() { letterThemeField().sendKeys(letterTheme); }
-    public void clickSendLetterButton() { sendLetterButton().click(); }
-    public void clickToBackToIncoming() { backToIncoming().click(); }
-    //public void typeLetterText() { letterTextArea().sendKeys(); }
+    @FindBy(xpath = "//img[@class='user-pic__image']")
+    private WebElement userPicture;
+
+    @FindBy(xpath = "//span[@class='user-account__name']")
+    private WebElement userInfo;
+
+    @FindBy(xpath = "//a[@title='Написать (w, c)']")
+    private WebElement writeLetterButton;
+
+    @FindBy(xpath = "//div[@class='composeYabbles']")
+    private WebElement recepientField;
+
+    @FindBy(xpath = "//div[@class='compose-LabelRow']/div/input")
+    private WebElement themeField;
+
+    @FindBy(xpath = "//div[@role='textbox']")
+    private WebElement letterTextArea;
+
+    @FindBy(xpath = "//div[@class='ComposeControlPanel-Part']/div/button")
+    private WebElement sendLetterButton;
+
+    @FindBy(xpath = "//a[text()='Вернуться во \"Входящие\"']")
+    private WebElement backToIncoming;
+
+    @FindBy(xpath = "//span[@title='Simbirsoft theme']")
+    public List<WebElement> letterCount;
+
+    public void clickMailSignInButton() {
+        mailPageSignInButton.click();
+    }
+
+    public void clickAuthorizationSignInButton() {
+        mailAuthorizationSignInButton.click();
+    }
+
+    public void clickWriteLetterButton() {
+        writeLetterButton.click();
+    }
+
+    public void typeLetterRecepient() {
+        recepientField.sendKeys(userEmail);
+    }
+
+    public void typeLetterTheme() {
+        themeField.sendKeys(letterTheme);
+    }
+
+    public void typeLetterContent() {
+        letterTextArea.sendKeys("Найдено " + letterCount.size() + " писем\\ьма");
+    }
+
+    public void clickSendLetterButton() {
+        sendLetterButton.click();
+    }
+
+    public void clickBackToIncoming() {
+        backToIncoming.click();
+    }
+
+    public void clickUserPicture() {
+        userPicture.click();
+    }
+
+    public String receiveUserLogin() {
+        return userInfo.getText();
+    }
+
+    public int calculateLetterCount() {
+        int count = letterCount.size();
+        return count;
+    }
+
+
+
+
+
+
+
 
 }
