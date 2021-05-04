@@ -7,15 +7,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
 
 
 public class TestClass {
 
     WebDriver driver = Webdriver.getChromeDriver();
-    MailPage mailPage = PageFactory.initElements(driver, MailPage.class);
-    MailAuthorizationPage mailAuthorizationPage = PageFactory.initElements(driver, MailAuthorizationPage.class);
+    MailPage mailPage = new MailPage(driver);
+    MailAuthorizationPage mailAuthorizationPage = new MailAuthorizationPage(driver);
     PropertiesFile prop = new PropertiesFile();
 
 
@@ -29,12 +28,12 @@ public class TestClass {
 
     @Test
     public void authorization() {
-        mailPage.clickMailSignInButton();
-        mailAuthorizationPage.typeLogin();
-        mailPage.clickAuthorizationSignInButton();
-        mailAuthorizationPage.typePassword();
-        mailPage.clickAuthorizationSignInButton();
-        mailPage.clickUserPicture();
+        mailPage.clickMailStartSignInButton(mailPage.mailStartPageSignInButton());
+        mailAuthorizationPage.inputLogin(prop.userLogin);
+        mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
+        mailAuthorizationPage.inputPassword(prop.userPass);
+        mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
+        mailPage.clickUserPicture(mailPage.userPicture());
         String currentUserLogin = mailPage.receiveUserLogin();
 
         Assert.assertEquals(prop.userLogin, currentUserLogin);
@@ -44,18 +43,19 @@ public class TestClass {
 
     @Test
     public void sendLetterAndCheckCount() {
-        mailPage.clickMailSignInButton();
-        mailAuthorizationPage.typeLogin();
-        mailPage.clickAuthorizationSignInButton();
-        mailAuthorizationPage.typePassword();
-        mailPage.clickAuthorizationSignInButton();
-        mailPage.clickWriteLetterButton();
-        mailPage.typeLetterRecepient();
-        mailPage.typeLetterTheme();
-        mailPage.typeLetterContent();
+        mailPage.clickMailStartSignInButton(mailPage.mailStartPageSignInButton());
+        mailAuthorizationPage.inputLogin(prop.userLogin);
+        mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
+        mailAuthorizationPage.inputPassword(prop.userPass);
+        mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
+        mailPage.clickWriteLetterButton(mailPage.writeLetterButton());
+        mailPage.inputLetterRecepient(prop.userEmail);
+        mailPage.typeLetterTheme(mailPage.letterTheme);
+        mailPage.typeLetterContent(mailPage.textArea());
         int beforeSend = mailPage.calculateLetterCount();
-        mailPage.clickSendLetterButton();
-        mailPage.clickBackToIncoming();
+        Assert.assertEquals(beforeSend, beforeSend);
+        mailPage.clickSendLetterButton(mailPage.sendButton());
+        mailPage.clickBackToIncoming(mailPage.backToIncoming());
         driver.navigate().refresh();
         int afterSend = mailPage.calculateLetterCount();
 

@@ -1,44 +1,38 @@
 package com.test.model.pages;
-
-import com.test.config.PropertiesFile;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class MailAuthorizationPage {
 
     public MailAuthorizationPage(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
     final WebDriver driver;
-    PropertiesFile propertiesFile = new PropertiesFile();
-
-
-    public String userLogin = propertiesFile.userLogin;
-    public String userPassword = propertiesFile.userPass;
-
 
     @FindBy(id = "passp-field-login")
-    private WebElement loginType;
+    WebElement loginType;
 
     @FindBy(id = "passp-field-passwd")
-    private WebElement passType;
+    WebElement passType;
 
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement authorizationButton;
-
-
-
-    public void typeLogin() {
-        loginType.sendKeys(userLogin);
+    public WebElement loginField() {
+        return loginType;
     }
 
-    public void typePassword() {
-        passType.sendKeys(userPassword);
+    public WebElement passwordField() {
+        return passType;
     }
 
-    public void clickAuthorizationButton() {
-        authorizationButton.click();
+    public void inputLogin(String userLogin){
+        loginField().sendKeys(userLogin);
     }
+
+    public void inputPassword(String userPass) {
+        passwordField().sendKeys(userPass);
+    }
+
 }
