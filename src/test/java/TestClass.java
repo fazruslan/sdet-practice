@@ -48,18 +48,18 @@ public class TestClass {
         mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
         mailAuthorizationPage.inputPassword(prop.userPass);
         mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
+        int letterCount = mailPage.calculateLetterCount();
         mailPage.clickWriteLetterButton(mailPage.writeLetterButton());
         mailPage.inputLetterRecepient(prop.userEmail);
         mailPage.typeLetterTheme(mailPage.letterTheme);
         mailPage.typeLetterContent(mailPage.textArea());
-        int beforeSend = mailPage.calculateLetterCount();
-        Assert.assertEquals(beforeSend, beforeSend);
+        Assert.assertEquals(letterCount, letterCount);
         mailPage.clickSendLetterButton(mailPage.sendButton());
         mailPage.clickBackToIncoming(mailPage.backToIncoming());
         driver.navigate().refresh();
         int afterSend = mailPage.calculateLetterCount();
 
-        Assert.assertNotEquals(beforeSend, afterSend);
+        Assert.assertNotEquals(letterCount, afterSend);
     }
 
     @After
