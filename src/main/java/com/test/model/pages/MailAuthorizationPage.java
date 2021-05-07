@@ -1,4 +1,5 @@
 package com.test.model.pages;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,20 +20,12 @@ public class MailAuthorizationPage {
     @FindBy(id = "passp-field-passwd")
     WebElement passType;
 
-    public WebElement loginField() {
-        return loginType;
-    }
-
-    public WebElement passwordField() {
-        return passType;
-    }
-
     public void inputLogin(String userLogin){
-        loginField().sendKeys(userLogin);
+        loginType.sendKeys(userLogin);
     }
 
     public void inputPassword(String userPass) {
-        passwordField().sendKeys(userPass);
+        passType.sendKeys(userPass);
     }
 
 }

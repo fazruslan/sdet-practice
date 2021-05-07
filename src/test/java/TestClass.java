@@ -17,45 +17,41 @@ public class TestClass {
     MailAuthorizationPage mailAuthorizationPage = new MailAuthorizationPage(driver);
     PropertiesFile prop = new PropertiesFile();
 
-
     @Before
     public void setUp() {
-        driver.get(mailPage.pageUrl);
+        driver.get(prop.pageUrl);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-
     }
 
     @Test
     public void authorization() {
-        mailPage.clickMailStartSignInButton(mailPage.mailStartPageSignInButton());
+        mailPage.clickMailStartSignInButton();
         mailAuthorizationPage.inputLogin(prop.userLogin);
-        mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
+        mailPage.clickAuthorizationSignInButton();
         mailAuthorizationPage.inputPassword(prop.userPass);
-        mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
-        mailPage.clickUserPicture(mailPage.userPicture());
+        mailPage.clickAuthorizationSignInButton();
+        mailPage.clickUserPicture();
         String currentUserLogin = mailPage.receiveUserLogin();
 
         Assert.assertEquals(prop.userLogin, currentUserLogin);
-
-
     }
 
     @Test
     public void sendLetterAndCheckCount() {
-        mailPage.clickMailStartSignInButton(mailPage.mailStartPageSignInButton());
+        mailPage.clickMailStartSignInButton();
         mailAuthorizationPage.inputLogin(prop.userLogin);
-        mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
+        mailPage.clickAuthorizationSignInButton();
         mailAuthorizationPage.inputPassword(prop.userPass);
-        mailPage.clickAuthorizationSignInButton(mailPage.authorizationSignInButton());
+        mailPage.clickAuthorizationSignInButton();
         int letterCount = mailPage.calculateLetterCount();
-        mailPage.clickWriteLetterButton(mailPage.writeLetterButton());
+        mailPage.clickWriteLetterButton();
         mailPage.inputLetterRecepient(prop.userEmail);
         mailPage.typeLetterTheme(mailPage.letterTheme);
-        mailPage.typeLetterContent(mailPage.textArea());
+        mailPage.typeLetterContent();
         Assert.assertEquals(letterCount, letterCount);
-        mailPage.clickSendLetterButton(mailPage.sendButton());
-        mailPage.clickBackToIncoming(mailPage.backToIncoming());
+        mailPage.clickSendLetterButton();
+        mailPage.clickBackToIncoming();
         driver.navigate().refresh();
         int afterSend = mailPage.calculateLetterCount();
 

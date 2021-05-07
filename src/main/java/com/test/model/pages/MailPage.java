@@ -14,128 +14,82 @@ public class MailPage extends PageFactory {
         PageFactory.initElements(driver, this);
     }
 
-    public String pageUrl = "https://mail.yandex.ru";
     public String letterTheme = "Simbirsoft theme";
 
-
     @FindBy(xpath = "//div[@class='HeadBanner-ButtonsWrapper']/a[2]")
-    WebElement mailPageSignInButtonSelector;
+    private WebElement mailPageSignInButton;
 
     @FindBy(xpath = "//div[@class='passp-button passp-sign-in-button']/button")
-    WebElement mailAuthorizationSignInButtonSelector;
+    private WebElement mailAuthorizationSignInButton;
 
     @FindBy(xpath = "//img[@class='user-pic__image']")
-    WebElement userPictureSelector;
+    private WebElement userPicture;
 
     @FindBy(xpath = "//span[@class='user-account__name']")
-    WebElement userInfo;
+    private WebElement userInfo;
 
-    @FindBy(xpath = "//a[@title='Написать (w, c)']")
-    WebElement writeLetterButtonSelector;
+    @FindBy(xpath = "//span[@class='mail-ComposeButton-Text']")
+    private WebElement writeLetterButton;
 
     @FindBy(xpath = "//div[@class='composeYabbles']")
-    WebElement recepientFieldSelector;
+    private WebElement recepientField;
 
     @FindBy(xpath = "//div[@class='compose-LabelRow']/div/input")
-    WebElement themeFieldSelector;
+    private WebElement themeField;
 
     @FindBy(xpath = "//div[@role='textbox']")
-    WebElement letterTextAreaSelector;
+    private WebElement letterTextArea;
 
     @FindBy(xpath = "//div[@class='ComposeControlPanel-Part']/div/button")
-    WebElement sendLetterButtonSelector;
+    private WebElement sendLetterButton;
 
-    @FindBy(xpath = "//div[@class='ComposeDoneScreen-Wrapper']/div/div[2]/a")
-    WebElement backToIncomingSelector;
+    @FindBy(xpath = "//div[@class='ComposeDoneScreen-Actions']/a")
+    private WebElement backToIncoming;
 
     @FindBy(xpath = "//span[@title='Simbirsoft theme']")
-    List<WebElement> letterCountSelector;
+    private List<WebElement> letterCount;
 
-
-    public WebElement mailStartPageSignInButton() {
-        return mailPageSignInButtonSelector;
+    public void clickMailStartSignInButton() {
+        mailPageSignInButton.click();
     }
 
-    public WebElement authorizationSignInButton() {
-        return mailAuthorizationSignInButtonSelector;
+    public void clickAuthorizationSignInButton() {
+        mailAuthorizationSignInButton.click();
     }
 
-    public WebElement userPicture() {
-        return userPictureSelector;
-    }
-
-    public WebElement writeLetterButton() {
-        return writeLetterButtonSelector;
-    }
-
-    public WebElement recepientField() {
-        return recepientFieldSelector;
-    }
-
-    public WebElement themeField() {
-        return themeFieldSelector;
-    }
-
-    public List<WebElement> letterCount() {
-        return letterCountSelector;
-    }
-
-    public WebElement sendButton() {
-        return sendLetterButtonSelector;
-    }
-
-    public WebElement textArea() {
-        return letterTextAreaSelector;
-    }
-
-    public WebElement backToIncoming() {
-        return backToIncomingSelector;
-    }
-
-    public void clickMailStartSignInButton(WebElement mailStartPageSignInButton) {
-        mailStartPageSignInButton.click();
-    }
-
-    public void clickAuthorizationSignInButton(WebElement authorizationSignInButton) {
-        authorizationSignInButton.click();
-    }
-
-    public void clickUserPicture(WebElement userPicture) {
+    public void clickUserPicture() {
         userPicture.click();
     }
 
-    public void clickWriteLetterButton(WebElement writeLetterButton) {
+    public void clickWriteLetterButton() {
         writeLetterButton.click();
     }
 
     public void inputLetterRecepient(String userMail) {
-        recepientField().sendKeys(userMail);
+        recepientField.sendKeys(userMail);
     }
 
     public void typeLetterTheme(String theme) {
-        themeField().sendKeys(theme); }
+        themeField.sendKeys(theme);
+    }
 
-    public void typeLetterContent(WebElement textArea) {
-        textArea.sendKeys("Найдено " + letterCount().size() + " писем\\ьма"); }
+    public void typeLetterContent() {
+        letterTextArea.sendKeys("Найдено " + letterCount.size() + " писем\\ьма");
+    }
 
-    public void clickSendLetterButton(WebElement sendLetterButton) {
-        sendLetterButton.click(); }
+    public void clickSendLetterButton() {
+        sendLetterButton.click();
+    }
 
-    public void clickBackToIncoming(WebElement backToIncoming) {
-        backToIncoming.click(); }
+    public void clickBackToIncoming() {
+        backToIncoming.click();
+    }
 
     public String receiveUserLogin() {
         return userInfo.getText();
     }
 
     public int calculateLetterCount() {
-        return letterCount().size(); }
-
-
-
-
-
-
-
-
+        return letterCount.size();
+    }
 }
